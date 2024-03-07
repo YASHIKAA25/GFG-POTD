@@ -1,0 +1,86 @@
+
+//cpp code: Approach Brute force: 
+    class Solution {
+  public:
+    string longestSubstring(string s, int n) {
+        int cur = 0 ;
+        string ans = "-1";
+        int i = 0 ; 
+        while(i<n)
+        {
+            int t = 1 ; 
+            string temp = s.substr(i,t);
+            while(2*t<=n && s.substr(i+t).find(temp)!=string::npos)
+            {
+                if(cur<t)
+                {
+                    cur = t ; 
+                    ans = temp;
+                }
+                    t++;
+                    temp = s.substr(i,t);
+            }
+            i++;
+        }
+       return ans;
+    }
+};
+//cpp code: approach DP: 
+
+class Solution {
+  public:
+    string longestSubstring(string s, int n) {
+    // Initialization
+    int x=-1,y=-1,ans=0; // Initialize variables to track indices and length of longest repeating substring
+    vector<vector<int>>dp(n,vector<int>(n,0)); // Initialize DP table of size n x n
+    
+    // DP Initialization
+    for(int i=1;i<n;i++){
+        // Compare each character with the first character
+        if(s[0]==s[i]){
+            dp[0][i]=1; // If a match is found, set corresponding cells to 1
+            dp[i][0]=1;
+        }
+    }
+    
+    // Dynamic Programming
+    for(int i=1;i<n;i++){
+        for(int j=1;j<=i;j++){
+            if(i==j)continue; // Skip diagonal elements
+            
+            // Compare characters at indices i and j
+            if(s[i]==s[j]){
+                // If characters match, update DP table
+                dp[i][j]=min(1+dp[i-1][j-1],abs(i-j));
+            }
+        }
+    }
+    
+    // Finding the Longest Substring
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(ans<dp[i][j]){
+                ans=dp[i][j]; // Update length of longest repeating substring
+                x=i;y=j; // Update indices of longest repeating substring
+            }else if(ans==dp[i][j] && j<y){
+                // If lengths are equal, choose the one with smaller j index
+                ans=dp[i][j];
+                x=i;y=j;
+            }
+        }
+    }
+    
+    // Constructing the Result
+    if(ans!=0){
+        string res="";
+        
+        // Traverse backward from indices x and y to construct the result string
+        while(x>=0 && y>=0 && dp[x][y]>0){
+            res=s[x]+res;
+            x--;y--;
+        }
+        return res;
+    }
+    return "-1"; // Return -1 if no repeating substring found
+}
+};
