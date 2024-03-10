@@ -1,0 +1,23 @@
+//Create a blank string at first to hold the outcome.
+//Set up an unordered map at the beginning to hold character frequencies.
+//Go over every character in the input string one by one.
+//Increase the current character's frequency count on the map.
+//Add the current character to the result string if its frequency count is 1.
+//Give back the string after removing any duplicates.
+
+//cpp code:
+
+class Solution{
+public:
+	string removeDuplicates(string str) {
+	    // code here
+	     int n=str.length();
+        string res="";
+        unordered_map<char,int>mp;
+        for(int i=0;i<n;i++){
+            mp[str[i]]++;
+            if(mp[str[i]]==1) res+=str[i];
+        }
+        return res;
+	}
+};
