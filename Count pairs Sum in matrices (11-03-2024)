@@ -1,0 +1,36 @@
+//Approach:
+//1) Calculate the total number of elements in each matrix.
+//2) Initialize left pointer to the start of mat1 and right pointer to the end of mat2.
+//3) Initialize a counter for pairs.
+//4) Iterate until left pointer is within bounds and right pointer is within bounds.
+//5) Calculate the sum of the elements at positions pointed by left and right pointers.
+//6) If the sum equals x, increment both pointers and counter.
+//7) If the sum is greater than x, decrement the right pointer.
+//8) If the sum is less than x, increment the left pointer.
+//9) Return the count of pairs whose sum equals x.
+
+//cpp code
+
+class Solution{
+public:	
+	int countPairs(vector<vector<int>> &mat1, vector<vector<int>> &mat2, int n, int x)
+	{
+	   int size = n * n;
+        int left = 0, right = size - 1;
+        int cnt = 0;
+        while (left < size && right >= 0)
+        {
+            int sum = mat1[left / n][left % n] + mat2[right / n][right % n];
+            if (sum == x) {
+                left++;
+                right--;
+                ++cnt;
+            }
+            else if (sum > x)
+                --right;
+            else
+                ++left;
+        }
+        return cnt;
+	}
+};
