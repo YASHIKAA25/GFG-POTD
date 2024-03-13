@@ -1,0 +1,27 @@
+//Approach:
+//1) Method : The code defines a matrixDiagonally method. This function returns a 1D integer array after receiving as input a 2D integer array mat.
+// 2) Figuring out how big the square matrix mat should be. It keeps the size in the variable n and assumes that the matrix is square (number of rows equal number of columns).
+//3) Computing the highest possible sum of the row and column indices that can appear in the diagonals of the matrix. Because diagonals begin at the top right and extend to the bottom left, the answer is n + n - 2.
+//4) Initializes a 1D integer array arr with size n * n. This array will store the diagonal elements of the matrix.
+//5) The code traverses the matrix's diagonals using two nested loops.
+//6) The loop conditions are made to guarantee that the indices remain inside the matrix's boundaries.
+//7)Inside the loops, it checks whether the current diagonal is an even or odd diagonal (determined by k % 2). Then it extracts the corresponding element from the matrix and stores it in the arr array.
+//8) The index in the arr array is tracked by the variable ind.
+//9) Lastly, the procedure returns the arr array, which contains the matrix's diagonal members.
+
+//java code
+
+class Solution {
+    public int[] matrixDiagonally(int[][] mat) {
+        int n=mat.length,sum=n+n-2,ind=0;
+        int arr[]=new int[n*n];
+        for(int k=0;k<=sum;k++){
+            for(int j=Math.max(0,k-n+1);;j++){
+                if(k-j<0 || k-j>=n || j<0 || j>=n) break;
+                if(k%2==0) arr[ind++]=mat[k-j][j];
+                else arr[ind++]=mat[j][k-j];
+            }
+        }
+        return arr;
+    }
+}
