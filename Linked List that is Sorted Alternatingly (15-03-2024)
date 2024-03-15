@@ -1,0 +1,28 @@
+//Approach:
+//1) The sort function is declared to take a double pointer to Node as its parameter. This indicates that the function will modify the linked list by rearranging its nodes.
+//2) A vector v is declared inside the method to hold the linked list nodes' values in a temporary manner. A pointer temp is also initialized to point to the linked list's head. 
+//3) To iterate through the linked list, the function enters a while loop. Every linked list node is iterated through inside the loop, and each node's data (value) is pushed into the vector v. In essence, this makes a vector replica of the linked list.
+//4) The vector v now has every value from the linked list once it has been traversed. The vector's elements are then sorted in non-decreasing order by the code using the std::sort function.
+//5) The code resets the pointer temp to refer back to the linked list's head after the vector v has been sorted. After that, it goes into a loop to go over the sorted vector again. It adds the matching value from the sorted vector v to the data of the current node that temp points to in each iteration. It advances temp to the following node in the linked list after changing the data.
+//6) Once all nodes in the linked list have been updated with the sorted values, the function completes execution.
+
+//cpp code
+
+
+class Solution {
+    public:
+    void sort(Node **head) {
+        vector<int> v;
+        Node *temp = *head;
+        while(temp){
+            v.push_back(temp->data);
+            temp = temp->next;
+        }
+        ::sort(v.begin(),v.end());
+        temp = *head;
+        for(int i=0;i<v.size();i++){
+            temp->data = v[i];
+            temp = temp->next;
+        }
+    }
+};
