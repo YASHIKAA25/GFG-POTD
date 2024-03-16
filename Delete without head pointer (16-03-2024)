@@ -1,0 +1,22 @@
+//Approach:
+//1) To make the deletion easier, create a temporary node. 
+//2) The node next to a specified node is stored in a pointer called "ptr," such as ptr = del->next. 
+//3) Copying the pointer data within the specified current node, so that del->data = ptr->data.
+//4) After that, storing the pointer to the next node in the link portion of the current node, such as del->next = ptr->next .The present node can now be readily deleted using standard deletion techniques.
+
+//java code
+
+class Solution
+{
+    void deleteNode(Node del_node)
+    {
+         // Your code here
+         Node ptr = del_node.next;
+         
+         del_node.data = ptr.data;
+         
+         del_node.next = ptr.next;
+         
+         ptr = null;
+    }
+}
