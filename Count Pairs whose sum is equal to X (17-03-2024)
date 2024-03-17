@@ -1,0 +1,34 @@
+//Approach:
+//1) There are three parameters required for the countPairs function: 
+//-> A pointer to the first linked list's head (struct Node*) is called head1. 
+//-> A pointer to the second linked list's head (struct Node*) is called head2. 
+//-> x: an integer that stands for the desired total. 
+//2) Setting Up an Unordered Set at First: 
+//-> In order to store the values of the first linked list, this line declares an unordered set called st. 
+//3) Adding Values to the Set from the First Linked List: 
+//-> The data value of each node in the first linked list (head1) is inserted into the unordered set st by this loop as iterates through the nodes of the list. 
+//4) Counting Pairs: The nodes of the second linked list (head2) are iterated through in this loop. 
+//-> It determines whether the difference between the goal sum x and the data value of the current node (head2->data) exists in the unordered set st for each node in the second linked list. The count cnt is increased if it does. 
+//-> This basically looks for a pair of entries whose total equals x, one from the first linked list and one from the second linked list. 
+//5) Count Returned: Lastly, the function gives back the number of pairings that were discovered and whose sum equals x.
+
+//cpp code
+
+class Solution{
+  public:
+    // your task is to complete this function
+    int countPairs(struct Node* head1, struct Node* head2, int x) {
+        unordered_set<int> st;
+        while (head1) {
+            st.insert(head1->data);
+            head1 = head1->next;
+        }
+        int cnt = 0;
+        while (head2) {
+            if (st.find(x - head2->data) != st.end())
+                ++cnt;
+            head2 = head2->next;
+        }
+        return cnt;
+    }
+};
