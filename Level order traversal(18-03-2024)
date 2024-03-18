@@ -1,0 +1,52 @@
+//Approach:
+//1) Function Definition: This function produces a vector of integers that represents the level order traversal of a binary tree when it receives as input a pointer to the root node of the tree. 
+//2) Variable Declaration: The elements of the tree will be stored in level order traversal using the vector res.
+//3) Verify for NULL Node: The function returns an empty vector res if the input node is NULL, which denotes an empty tree. 
+//4) Queue Initialization: To carry out level order traversal, a queue of pointers to Node objects is established. To be processed nodes will be placed in this queue.
+//5) Push Root Node to Queue: In order to begin the traversal, the tree's root node is put into the queue.
+//6) Level Order Traversal via Queue: The while loop keeps going until all nodes have been handled, or until the queue is empty.
+//-> The current level node is represented by the front element of the queue, which is retrieved and eliminated.
+//-> The current node's data is returned to the res vector.
+//-> The current node's left and right children are then looked up, and if they are, they are added to the queue for further processing.
+//7) Return Result: Lastly, the function gives back the vector res, which contains the binary tree's level order traversal.
+
+//cpp code
+
+
+class Solution
+{
+    public:
+    //Function to return the level order traversal of a tree.
+    vector<int> levelOrder(struct Node* node)
+    {
+        vector <int> res;
+        
+        //if node is null, we return the list.
+        if (node == NULL) 
+        return res;
+        
+        //creating an empty queue for level order traversal.
+        queue<Node *> q;
+    
+        q.push(node);
+    
+        while (q.empty() == false)
+        {
+            //storing front element of queue in list and removing it from queue.
+            Node *node = q.front();
+            res.push_back (node->data);
+            q.pop();
+    
+            //storing the left child of the parent node in queue.
+            if (node->left != NULL)
+                q.push(node->left);
+    
+            //storing the right child of the parent node in queue.
+            if (node->right != NULL)
+                q.push(node->right);
+        }
+        //returning the list.
+        return res;
+    }
+
+};
