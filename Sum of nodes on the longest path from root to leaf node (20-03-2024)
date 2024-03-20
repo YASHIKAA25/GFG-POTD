@@ -1,0 +1,66 @@
+//Approach:
+//1) Class Definition: A class called Solution is defined within the code.
+//2) Public Members: The class Solution's public member variables are ans and maxPath. These are utilized to store the longest path's length and the outcome, respectively.
+//3) Solve Function: The binary tree is traversed recursively using this function to get the total of all paths from the root to each leaf node. Three parameters are required:
+//-> root: A reference to the node that is being worked on right now.
+//-> temp: A vector that holds the path that is currently being taken from the root to the node.
+//-> sum: The total of the path as it is now.
+//4) Within the function:
+//-> It determines the length of the current path (temp) and modifies maxPath and ans correspondingly if root is NULL, which indicates that we have reached the end of a path.
+//-> The current node's value is pushed into the temp vector, sum is updated, and solution for the current node's left and right children is called recursively if root is not NULL.
+//-> The final element (the current node) is taken out of temp once it has traversed the left and right subtrees, and the total is updated appropriately.
+//5) The function sumOfLongRootToLeafPath serves as the starting point for calculating the sum of the longest path connecting a root to a leaf. It invokes the solution function using the binary tree's root and initializes an empty vector temp.
+//6) Return Value: The function returns the value stored in ans, which holds the sum of the longest root-to-leaf path.
+
+//cpp code
+
+
+/*
+structure of the node of the binary tree is as
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+
+    Node(int x)
+    {
+        data = x;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+class Solution
+{    
+public:
+    int ans = 0, maxPath = 0;
+    
+    void solve(Node* root, vector<int>& temp, int sum) {
+        if(!root) {
+            int n = (int)temp.size();
+            
+            if(maxPath < n) {
+                maxPath = n;
+                ans = sum;
+            }
+            if(maxPath == n) {
+               if(sum>ans) ans = sum;
+            }
+            return;
+        }
+        temp.push_back(root->data);
+        sum += root->data;
+        solve(root->left, temp, sum);
+        solve(root->right, temp, sum);
+        sum -= root->data;
+        temp.pop_back();
+        return;
+    }
+    int sumOfLongRootToLeafPath(Node *root)
+    {
+        vector<int> temp;
+        solve(root, temp, 0);
+        return ans;
+    }
+};
