@@ -1,0 +1,89 @@
+//Approach:
+//1) Class Defined: The class Solution is defined in the code.
+//2) zigZagTraversal method: 
+//-> The input for this method is a pointer to the binary tree's root node (Node* root). 
+//-> It yields a vector (vector) of integers that contains the tree's zigzag traverse.
+//3) Initialization of Variables: 
+//-> Nodes are initially stored in a deque q (double-ended queue) for traversal. 
+//-> The resulting zigzag traversal is initialized into a vector called res. 
+//-> The result vector now includes the data from the root node. 
+//-> It is declared that a temporary pointer of type Node* exists.
+//4) Traversal Logic:
+//-> A variable level is initialized to 1 to keep track of the current level.
+//-> The traversal is performed using a while loop that runs until the deque q is empty.
+//5) Inside the loop:
+//a. The number of nodes at the current level is obtained by querying the size of the deque q.
+//b. A for loop iterates over the nodes at the current level.
+//c. Depending on the current level (level), the traversal direction (left to right or right to left) is determined.
+//d. For odd levels, nodes are popped from the back of the deque, and for even levels, nodes are popped from the front.
+//e. If the level is odd, the children of the current node (if they exist) are added to the deque from right to left.
+//f. If the level is even, the children of the current node (if they exist) are added to the deque from left to right.
+//g. The data of the visited nodes is added to the result vector.
+//6) Level Update:
+//After processing all nodes at the current level, the level variable is incremented to move to the next level.
+//7) Return Statement:
+//Once the traversal is complete, the resulting vector res containing the zigzag traversal of the tree is returned.
+
+
+//cpp code
+
+class Solution{
+    public:
+    
+    vector <int> zigZagTraversal(Node* root)
+    {
+        deque<Node*> q;
+        vector<int> res;
+        
+        q.push_back(root);
+        res.push_back(root->data);
+        Node* temp;
+   
+        
+        int level = 1;
+                
+        while (!q.empty()) {
+            int n = q.size();
+    
+            for (int i = 0; i < n; i++) {
+    
+                
+                if (level % 2 == 0) {
+                    temp = q.back();
+                    q.pop_back();
+                }
+                else {
+                    temp = q.front();
+                    q.pop_front();
+                }
+     
+                
+                if (level % 2 != 0) {
+    
+                    if (temp->right) {
+                        q.push_back(temp->right);
+                        res.push_back(temp->right->data);
+                    }
+                    if (temp->left) {
+                        q.push_back(temp->left);
+                        res.push_back(temp->left->data);
+                    }
+                }
+                else if (level % 2 == 0) {
+    
+                    if (temp->left) {
+                        q.push_front(temp->left);
+                        res.push_back(temp->left->data);
+                    }
+                    if (temp->right) {
+                        q.push_front(temp->right);
+                        res.push_back(temp->right->data);
+                    }
+                }   
+            }
+            level++; 
+        }
+        return res;    
+    }
+};
+
