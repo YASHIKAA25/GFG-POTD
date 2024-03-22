@@ -1,0 +1,49 @@
+//Approach:
+//1) height Function: This function determines a binary tree's height. It produces an integer that represents the height after receiving a pointer to the tree's root as input. It returns 0 if the root is NULL, which denotes an empty tree. If not, it recursively determines the heights of the left and right subtrees (lh and rh, respectively), returning the current node's height as the maximum of the two heights + 1.
+//2) func Function: This function is in charge of computing a binary tree's diagonal sum. Three parameters are required:
+//a> v: a pointer to the integer vector that will be used to store the diagonal sums.
+//b> root: a reference to the node that is being worked on right now.
+//c> level: an integer that indicates the tree's current level.
+//-> Within the operation:
+//a> The function returns if the node in question is NULL.
+//b> It increases the level-th index of the v vector by the value of the current node.
+//c> It increases the level by one by calling itself recursively for the appropriate child of the active node.
+//d> It recursively calls itself for the left child of the current node, with the level incremented by 1. Note that the level is incremented here with ++level, which means it increments the level and then passes it to the next recursive call.
+//3) diagonalSum Function: This is the main function that computes the diagonal sums of a binary tree. It takes the root of the tree as input and returns a vector of integers representing the diagonal sums. Inside the function:
+//-> It initializes a vector v with the size equal to the height of the tree (calculated using the height function).
+//-> It calls the func function to compute the diagonal sums and populate the v vector.
+
+//cpp code
+
+class Solution {
+  public:
+  int height(Node *root){
+    if(root==NULL){
+        return 0;
+    }
+    int lh=height(root->left);
+    int rh=height(root->right);
+    return 1+max(lh,rh);
+}
+void func(vector<int>&v,Node *root,int level){
+    if(root==NULL){
+        return;
+    }
+    v[level]+=root->data;
+    func(v,root->right,level);
+    func(v,root->left,++level);
+}
+vector <int> diagonalSum(Node* root) {
+    // Add your code here
+    vector<int>v(height(root));
+    func(v,root,0);
+    vector<int>ans;
+    for(int i=0;i<v.size();i++){
+        if(v[i]==0)break;
+        ans.push_back(v[i]);
+    }
+    return ans;
+    //vector<int> diagonalSum(Node* root) {
+        // Add your code here
+    }
+};
