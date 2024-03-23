@@ -1,0 +1,42 @@
+//Approach:
+//1) N is the integer that is entered into the function Series. 
+//2) It yields a vector with just 0 if N is 0.
+//3) It yields a vector with 0 and 1 if N is 1.
+//4) It initializes a vector called fib to hold Fibonacci numbers up to the Nth term for N larger than 1.
+//5) The first two items of fib are initialized to 0 and 1, respectively.
+//6) In order to prevent overflow, iterate from 2 to N, computing each Fibonacci number as the sum of the two Fibonacci numbers before it.
+//7) It returns the vector fib, which contains the Fibonacci sequence, after computing all Fibonacci numbers up to N.
+
+//cpp code
+
+class Solution {
+public:
+    vector<int> Series(int N) {
+        // Check if N is 0, return {0} if true
+        if (N == 0) {
+            return {0};
+        }
+        // Check if N is 1, return {0, 1} if true
+        if (N == 1) {
+            return {0, 1};
+        }
+        
+        // Define modulo value
+        int mod = 1e9 + 7;
+        // Initialize a vector to store Fibonacci series up to N
+        vector<int> fib(N + 1);
+        // Initialize first two Fibonacci numbers
+        fib[0] = 0;
+        fib[1] = 1;
+        
+        // Calculate Fibonacci series up to N
+        for (int i = 2; i <= N; i++) {
+            // Fibonacci number is the sum of the previous two Fibonacci numbers
+            // Calculate the sum and take modulo to prevent overflow
+            fib[i] = (fib[i - 1] + fib[i - 2]) % mod;
+        }
+
+        // Return the Fibonacci series vector
+        return fib;
+    }
+};
