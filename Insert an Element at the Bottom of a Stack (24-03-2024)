@@ -1,0 +1,41 @@
+//Approach:
+//1) Declaration of Function:
+//> The two methods, insertAtBottom and recur, are contained in the Solution class.
+//> Both approaches work with integer stacks (stacks).
+//> The recursive function recur returns a stack in exchange for an integer X and a reference to a stack St.
+//> insertAtBottom returns a stack in exchange for an integer X and a stack St.
+//2) Recursive Technique:
+//> Recursively, this procedure adds an element X to the bottom of the stack St.
+//> X gets pushed immediately onto the stack if it is empty.
+//> Recursively removing the top element, inserting X at the bottom by calling itself recursively, and finally pushing the deleted element (y) back into the stack are the steps taken if the stack is not empty.
+//> Ultimately, the changed stack is returned.
+//3) Method InsertAtBottom: 
+//> This approach inserts an element X at the base of the stack St by using the recur method. 
+//> It only passes the element X and the stack St to the recur procedure, which it calls. 
+//> Ultimately, the changed stack is returned.
+
+
+//cpp code
+
+class Solution{
+public:
+    
+    stack<int> recur(stack<int> &St,int X){
+         
+        if(St.size()==0){
+            St.push(X);
+        }
+        else{
+            
+            int y=St.top();
+            St.pop();
+            St=recur(St,X);
+            St.push(y);
+        }
+        return St;
+    }
+    stack<int> insertAtBottom(stack<int> St,int X){
+        St=recur(St,X);
+        return St;
+    }
+};
