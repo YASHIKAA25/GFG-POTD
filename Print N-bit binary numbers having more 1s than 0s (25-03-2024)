@@ -1,0 +1,43 @@
+//Explanation:
+//1) The two functions, NBitBinaryUtil and NBitBinary, are part of the class Solution.
+//2) NBitBinaryUtil is a recursive utility function that generates all possible binary strings of length 'remainingPlaces' given the current binary string 'number', the count of extra '1's in the current string 'extraOnes', and the number of remaining places to fill 'remainingPlaces'.
+//3) When there are no more places (i.e.,'remainingPlaces' = 0), the response vector 'ans' receives an addition of the binary string 'number'.
+//4) The function adds '1' or '0' to the current binary string with each recursive call, depending on how many additional '1s' ('extraOnes') there are. After that, it calls itself again with the modified parameters.
+//5) The NBitBinary function initializes an empty string 's' and calls the NBitBinaryUtil function to generate all possible binary strings of length 'n'. It then returns the generated binary strings.
+
+//cpp code
+
+class Solution {
+public:
+    
+    // Utility function to generate all possible binary strings of length 'remainingPlaces'
+    // 'number' represents the current binary string being constructed
+    // 'extraOnes' represents the count of extra '1's in the current binary string
+    void NBitBinaryUtil(string number, int extraOnes, int remainingPlaces, vector<string> &ans) {
+        
+        // If no more places are remaining, add the constructed binary string to the answer
+        if (remainingPlaces == 0) {
+            ans.push_back(number);
+            return;
+        }
+        
+        // Add '1' to the binary string and call the function recursively with reduced remainingPlaces
+        NBitBinaryUtil(number + "1", extraOnes + 1, remainingPlaces - 1, ans);
+        
+        // If there are extra '1's, add '0' to the binary string and call the function recursively
+        // with reduced remainingPlaces and reduced extraOnes
+        if (0 < extraOnes) 
+            NBitBinaryUtil(number + "0", extraOnes - 1, remainingPlaces - 1, ans); 
+    }
+
+    // Main function to generate all possible binary strings of length 'n'
+    vector<string> NBitBinary(int n) {
+        vector<string> ans; // Vector to store generated binary strings
+        string s = ""; // Initialize an empty string
+        
+        // Call the utility function to generate binary strings
+        NBitBinaryUtil(s, 0, n, ans);
+        
+        return ans; // Return the vector containing all generated binary strings
+    }
+};
