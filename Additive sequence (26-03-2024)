@@ -1,0 +1,58 @@
+//Explanation:
+//1) The getNumber function takes two indices, i and j, and a reference to a string s. It then returns the integer that is produced by the substring of s that extends from index i to index j-1. The substring is iterated through and transformed into an integer.
+//2) The isAdditiveSequence function determines whether or not the supplied string s constitutes an additive sequence.
+//3) Starting Point:
+//> The string s's length is stored in n, while the elements of the prospective additive sequence are represented by the numbers a, b, and c.
+//> The number of valid additive sequences found is stored in count.
+//4) Iterating over nested loops, the function does the following:
+//> Index 2 to n-1 are iterated through in the outer loop (i).
+//> Index 1 to i-1 are iterated over in the inner loop (j).
+//5) Computing Initial Elements: The getNumber function is called inside the nested loops to compute the initial two elements (a and b) of a possible additive sequence.
+//6) Compute the Third Element and Beyond: Next, it goes into another loop that computes the third element (c) as well as any components that might come after it in the possible additive sequence. Until it reaches the end of the string or c exceeds the sum of a and b, it continues to add digits to c.
+//7) Checking for Valid Sequence: If c equals the sum of a and b, it increments the count, updates the elements a, b, and c, and continues to check for further elements of the sequence.
+//8) Validation: After the loop, it checks if there was at least one valid additive sequence (count > 0), and if the end of the string is reached (k == n) with no remaining digits (c == 0). If both conditions are met, it returns true, indicating that the string represents an additive sequence. Otherwise, it returns false.
+
+//cpp code 
+
+class Solution {
+  public:
+    int getNumber(string &s, int i, int j){
+        int ans=0;
+        for(int k=i;k<j;k++){
+            ans=ans*10+(s[k]-'0');
+        }
+        return ans;
+    }
+    bool isAdditiveSequence(string s) {
+        // Your code here
+        int n=s.length();
+        int a,b,c,count;
+        for(int i=2;i<n;i++){
+            for(int j=1;j<i;j++){
+                // calculate the first 2 elements
+                a=getNumber(s,0,j);
+                b=getNumber(s,j,i);
+                int k=i;
+                count=0;
+                c=0;
+                
+                // loop for calculating the 3rd element and so on
+                while(k<n && c<a+b){
+                    c=c*10+(s[k]-'0');
+                    if(c==a+b){
+                        count++;
+                        a=b;
+                        b=c;
+                        c=0;
+                    }
+                    k++;
+                }
+                // check if we have at least 1 sequence and there should be no digits remaining 
+                if(count>0 && k==n && c==0){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
