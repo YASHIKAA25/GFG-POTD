@@ -1,0 +1,82 @@
+//Explanation:
+//1) Class Definition: The Solution class definition is the primary one .
+//2) Function Definition: The class contains a member function called findShortestPath that returns an integer when given a reference to a 2D vector mat as input.
+//3) Initialization of Arrays: To represent potential movements (up, left, right, and down) in a grid, two arrays of size four, rowNum and colNum, are initialized.
+//4) Initialization: The number of rows and columns in the matrix mat is the initial value of n and m, respectively.
+//5) Queue Initialization: A queue of arrays of size 3 is declared. This queue will store the coordinates (i, j) and the distance from the starting point.
+//6) Distance Array Initialization: To hold the shortest distance between each cell and the destination, an array d of size n x m is initialized. 
+//7) Lambda Functions: To determine whether a cell is within bounds and whether it is a legitimate cell to move to, two lambda functions are defined: isValid and check. 
+//8) Initialization of Queue: Cells on the rightmost column that are valid starting points are pushed onto the queue.
+//9) Breadth-First Search (BFS): The queue is used to carry out a BFS. It updates the shortest distance, investigates the current cell's neighbors (x, y), and adds valid nearby cells to the queue.
+//10) Finding the Shortest Path: After BFS, the shortest distance to reach the leftmost column is calculated.
+//11) Handling Infinite Distance: If no path is found (i.e., ans remains 1e9), ans is set to -1.
+//12) Returning the Result: The shortest distance or -1 is returned as the result.
+
+// cpp code
+
+class Solution
+{
+public:
+    int rowNum[4] = {-1, 0, 0, 1}; 
+    int colNum[4] = {0, -1, 1, 0}; 
+    int findShortestPath(vector<vector<int>> &mat)
+    {
+        int n = mat.size(); 
+        int m = mat[0].size(); 
+        
+        queue<array<int,3>> q; 
+        
+        int d[n][m]; 
+        
+        
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++)
+                d[i][j] = 1e9;
+        
+        
+        auto isValid = [&](int i, int j) {
+            if(i < 0 || i >= n || j < 0 || j >= m) return false;
+            return true;
+        };
+        
+        
+        auto check = [&](int i, int j) {
+            if(!isValid(i, j)) return false;
+            for(int k = 0; k < 4; k++) {
+                if(isValid(i + rowNum[k], j + colNum[k]) && !mat[i + rowNum[k]][j + colNum[k]]) return false;
+            }
+            return true;
+        };
+        
+        
+        for(int i = 0; i < n; i++) {
+            if(check(i, m - 1)) {
+                q.push({i, m - 1, 1});
+            }
+        }
+        
+       
+        while(!q.empty()) {
+            auto z = q.front();
+            int x = z[0], y = z[1], dis = z[2];
+            q.pop();
+            if(d[x][y] > dis) {
+                d[x][y] = dis;
+                for(int k = 0; k < 4; k++) {
+                    if(check(x + rowNum[k], y + colNum[k])) {
+                        q.push({x + rowNum[k], y + colNum[k], dis + 1});
+                    }
+                }
+            }
+        }
+        
+        
+        int ans = 1e9;
+        for(int i = 0; i < n; i++)
+            ans = min(ans, d[i][0]);
+        
+        
+        if(ans >= 1e9) ans = -1;
+        return ans;
+    }
+};
