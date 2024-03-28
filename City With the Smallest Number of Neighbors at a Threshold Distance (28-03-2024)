@@ -1,0 +1,87 @@
+//Explanation:
+//1) The two public member functions of the class Solution, findCity and dijkstra, are defined :
+//a) Dijkstra Function:
+//> In order to determine the shortest paths between a particular source node and every other node in a weighted network, this function applies Dijkstra's method.
+//> Setting parameters
+//• n: The graph's node count.
+//• graph: The graph's adjacency list representation. It's a vector of vectors with pairs in each inner vector that stand in for nearby nodes and the edge weights that correspond to them.
+//• k: The cutoff distance. Nodes will be counted if their distances are less than or equal to this criterion.
+//• The source node, or src, is where Dijkstra's algorithm begins.
+//> Returns: The number of nodes whose separation from the source node is less than or equal to k, expressed as an integer.
+//b) findCity Function:
+//> By calculating the distance between each city and every other city using the Dijkstra function, this function determines which city is the most central in the network.
+//> Setting parameters
+//• n: The number of the network's cities, or nodes.
+//• m: The total number of network edges.
+//• edges: A vector composed of other vectors that show the network's edges. • Three components make up each inner vector: the distance between the beginning and finishing cities as well as their respective distances.
+//• separationThreshold: The distance at which cities are counted.
+//> Returns: The city index with the highest centrality in the network.
+//2) Details of the findCity function's implementation 
+//> The graph is represented as an empty vector graph of size n that is initialized, with the nearby nodes and edge weights being stored in each node's adjacency list.
+//> By iterating over the edges vector and adding edges between matching cities along with their distances in both directions, it populates the graph.
+//The distances between every city and every other city are stored in a vector dis that is initialized.
+//> It uses the dijkstra function to determine the distances between every city in the network and saves the number of cities that are within the distance threshold (distantThreshold).
+//> It finds the city that has the minimum count of cities within the distance threshold, indicating that it is the most central city within the network.
+//> It returns the index of the most central city found .
+
+//cpp code
+
+class Solution {
+  public:
+    
+    int dijkstra(int n, vector<vector<pair<int, int>>>& graph, int k, int src) {
+        
+        priority_queue<int> q;
+        q.push(src);
+
+        vector<int> dist(n, INT_MAX);
+        dist[src] = 0;
+
+        while (!q.empty()) {
+            int node = q.top();
+            q.pop();
+
+            for (auto x : graph[node]) {
+                int nbr = x.first;
+                int wt = x.second;
+                if (dist[nbr] > dist[node] + wt) {
+                    dist[nbr] = dist[node] + wt;
+                    q.push(nbr);
+                }
+            }
+        }
+
+        int c = 0;
+        for (int i = 0; i < n; i++) {
+            if (dist[i] <= k)
+                c++;
+        }
+        return c;
+    }
+    
+    int findCity(int n, int m, vector<vector<int>>& edges, int distanceThreshold) {
+        
+        vector<vector<pair<int, int>>> graph(n);
+       
+        for (int i = 0; i < edges.size(); i++) {
+            graph[edges[i][0]].push_back({edges[i][1], edges[i][2]});
+            graph[edges[i][1]].push_back({edges[i][0], edges[i][2]});
+        }
+        
+        vector<int> dis(n, 0);
+
+        for (int i = 0; i < n; i++) {
+            dis[i] = dijkstra(n, graph, distanceThreshold, i);
+        }
+        
+        int ans = INT_MAX;
+        int idx = -1;
+        for (int i = 0; i < n; i++) {
+            if (ans >= dis[i]) {
+                ans = dis[i];
+                idx = i;
+            }
+        }
+        return idx;
+    }
+};
