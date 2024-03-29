@@ -1,0 +1,24 @@
+//Explanation:
+//1) Function Definition:  This function named isEularCircuitExist takes two parameters:
+//> v: An integer representing the number of vertices in the graph.
+//> adj[]: An array of vectors representing the adjacency list of the graph.
+//2) Loop through Vertices: This loop iterates over each vertex in the graph, from 0 to v - 1.
+//3) Checking Vertex Degree:
+//Inside the loop, it checks whether the degree of the current vertex i (i.e., the size of its adjacency list adj[i]) is odd. If it's odd, it means that there's an odd number of edges incident on that vertex, which implies that an Eulerian circuit cannot exist. In such a case, the function returns false.
+//4) Returning Result:
+//If the loop completes without finding any vertex with an odd degree, it means that all vertices have even degrees, and thus an Eulerian circuit can exist. In this case, the function returns true.
+
+
+//cpp code
+
+class Solution {
+public:
+	bool isEularCircuitExist(int v, vector<int>adj[]){
+	    for(int i=0;i<v;i++){
+	        if(int(adj[i].size())%2==1) return false;
+	    }
+	    
+	    return true;
+	}
+
+};
