@@ -1,0 +1,21 @@
+//Explanation:
+//1) Class Defined:
+//A public method called minValue is defined for the Solution class. A pointer to a Node object root is required as an input for this procedure.
+//2) minValue Approach:
+//> Finding the lowest value in a binary search tree (BST) with root as its root is the goal of this technique.
+//> To determine whether the tree is empty, it first looks to see if the root is nullptr. It yields -1 in this instance, meaning that the tree has no minimum value.
+//> Next, it determines if nullptr is the left child of the current node (root->left). If so, it returns root->data, which is the data that is currently stored in the current node, as the root node itself is the minimum value.
+//> If the left child is not nullptr, it recursively calls the minValue function on the left child (root->left). This recursive call continues until it reaches a leaf node, which is the minimum value in the BST.
+
+//cpp code
+
+class Solution {
+  public:
+    int minValue(Node* root) {
+    // Code here
+    if(root == nullptr) return -1;
+    if(root -> left == nullptr) return root->data;
+    return minValue(root->left);
+
+    }
+};
