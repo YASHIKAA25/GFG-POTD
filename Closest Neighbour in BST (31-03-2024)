@@ -1,0 +1,29 @@
+//Explanation:
+//1) Function Definition: The class Solution and the function findMaxForN are defined . Two arguments are required by the method:
+//> root: a reference to the binary search tree's root node.
+//> n: an integer that denotes the value for which we are searching the BST for the greatest value that is either less than or equal to it.
+//2) Base Case: We return -1 if the current node is NULL, which indicates that the tree is empty. We return n if the value of the current node equals n since n is the greatest value that is either less than or equal to n.
+//3) Recursion:
+//> If the value of the current node is less than n, it means that the maximum value less than or equal to n lies in the right subtree. So, we recursively call the function on the right subtree. 
+//> If the returned value k from the right subtree is -1, it means that there is no value less than n in the right subtree, so we return the current node's value (root->key) as the maximum value less than or equal to n.
+//> If k is not -1, it means the maximum value less than or equal to n was found in the right subtree, so we return k.
+//> If the value of the current node is greater than n, it means the maximum value less than or equal to n lies in the left subtree. So, we recursively call the function on the left subtree.
+//4) Returning Result:
+//If the value of n does not exist in the tree and no value less than n is found, the function will return -1. Otherwise, it will return the maximum value less than or equal to n.
+
+//cpp code
+
+class Solution {
+  public:
+    int findMaxForN(Node* root, int n) {
+        if(root == NULL) return -1;
+        if(root->key == n) return n;
+        else if(root->key < n){
+            int k = findMaxForN(root->right, n);
+            if(k == -1) return root->key;
+            else return k;
+        }
+        
+        else if(root->key > n) return findMaxForN(root->left, n);
+    }
+};
