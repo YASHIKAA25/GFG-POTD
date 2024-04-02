@@ -1,0 +1,41 @@
+//Explanation:
+//1) Class Definition: A class called Solution is defined .
+//2) Public Member: The class contains a public member called ans, whose initial value is INT_MAX. It is likely that the minimal absolute difference between any two nodes in the tree is stored in this component.
+//3) solve Function: This function is a helper function that finds the least absolute difference between any two nodes by recursively traversing the binary search tree (BST).
+//> Parameters: It requires two: a reference to an integer last, which indicates the value of the data from the last visited node, and a pointer to a Node object called root, which represents the current root node of the subtree being processed.
+//> Base Case: The function returns if the root is nullptr, which denotes the end of a subtree.
+//> Recursive Calls: The function first performs a recursive call to itself for the current node root's left subtree before determining whether or not last is equal to -1. It determines the absolute difference between the value of the previous visited node (last) and the current node's data (root->data) if last is not equal to -1. It updates and stores the determined absolute difference and the minimum of its current value. The data of the current node is then updated last.
+//> Right Subtree: Lastly, it makes a recursive call to the current node root's right subtree.
+//4) absolute_diff Function: This function is the entry point for calculating the minimum absolute difference between any two nodes in the given binary search tree (BST).
+//> Parameters: It takes a pointer to a Node object named root, representing the root of the BST.
+//> Initialization: It initializes a variable last to -1, which will be used to keep track of the data of the last visited node.
+//> Calling solve Function: It calls the solve function with the root of the BST and the last variable.
+//> Return Value: Finally, it returns the value stored in ans, which represents the minimum absolute difference between any two nodes in the BST.
+
+//cpp code
+
+class Solution
+{
+    public:
+    int ans=INT_MAX;
+    
+    void solve(Node* root, int&last){
+        if(!root) return;
+        
+        solve(root->left, last);
+        if(last!=-1){
+            ans=min(ans, root->data - last);
+        }
+        last=root->data;
+        solve(root->right, last);
+    }
+    
+    int absolute_diff(Node *root)
+    {
+        //Your code here
+        int last=-1;
+        solve(root, last);
+        
+        return ans;
+    }
+};
