@@ -1,0 +1,44 @@
+//Explanation:
+//1) Class Definition:
+//The code defines a class named Solution, which presumably contains methods to solve a particular problem.
+//2) Public Member Function kthCommonAncestor:
+//This is a public member function named kthCommonAncestor. It takes the following parameters:
+//> root: a pointer to the root node of a binary search tree (BST).
+//> k: an integer representing the kth common ancestor to be found.
+//> x and y: integers representing the values of two nodes in the BST.
+//3) Algorithm:
+//> Initialization:
+//It initializes an empty vector vec to store the values of nodes traversed.
+//> Traversing the BST:
+//It traverses the BST starting from the root node. At each node, it pushes the value of the node into the vec vector. It moves to the left child if both x and y are less than the current node's value, and it moves to the right child if both x and y are greater than the current node's value. It stops when it finds a node where x and y are on different sides of the current node.
+//> Finding the kth Common Ancestor:
+//It calculates the index of the kth common ancestor in the vec vector. If the size of the vector is less than k, it means there are fewer than k ancestors, so it returns -1. Otherwise, it returns the value of the node at index ind in the vec vector, which represents the kth common ancestor.
+
+//cpp code
+
+class Solution
+{
+    public:
+    
+    /*You are required to complete below function */
+    int kthCommonAncestor(Node *root, int k,int x, int y)
+    {
+        // your code goes here
+          vector<int> vec;
+        
+        while(true){
+            vec.push_back(root->data);
+            
+            if(x>root->data && y>root->data)
+                root=root->right;
+            else if(x<root->data && y<root->data)
+                root=root->left;
+            else
+                break;
+        }
+        int ind=vec.size()-k;
+        if(vec.size() <k)
+            return -1;
+        return vec[ind];
+    }
+};
