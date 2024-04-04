@@ -1,0 +1,39 @@
+//Explanation:
+//1) Class Definition: A class called Solution is defined. 
+//2) Function Definition: sumSubstrings is the name of a public member function that is present inside the class. This function returns a long long integer with a single parameter of type string. 
+//3) Initialization of Variables: The function initializes three long-long variables: prev, curr, and ans. 
+//> prev: Stores the value of the previous substring sum.
+//> curr: Stores the value of the current substring sum.
+//> ans: Accumulates the sum of all possible substrings.
+//Additionally, a long long variable mod is initialized to store the modulo value.
+//4) Loop Through String: A for loop is used by the function to iterate through each character s[i] in the input string s.
+//5) Calculating Current Substring Sum: For each character s[i], the code calculates the current substring sum curr using the formula:
+//> (s[i] - '0'): Converts the character s[i] to its integer equivalent.
+//> (i + 1): Represents the length of the current substring (1-indexed).
+//> prev * 10: Incorporates the previous substring sums to calculate the current substring sum.
+//> The calculated curr is then updated to the modulo value mod.
+//6) Accumulating Substring Sums: The code adds the current substring sum curr to the total sum ans, and updates ans to its modulo value mod.
+//7) Returning Final Sum: After looping through all characters in the string, the function returns the final accumulated sum ans.
+
+//cpp code
+
+class Solution
+{
+    public:
+    //Function to find sum of all possible substrings of the given string.
+    long long sumSubstrings(string s){
+        
+        long  long prev=0, curr=0, ans=0;
+        long long mod=1e9+7;
+        
+        for(int i=0;i<s.length();i++){
+            curr=(s[i]-'0')*(i+1) + prev*10;
+            curr%=mod;
+            ans+=curr;
+            ans%=mod;
+            prev=curr;
+        }
+        
+        return ans;
+    }
+};
