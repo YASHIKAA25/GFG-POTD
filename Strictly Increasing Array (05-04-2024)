@@ -1,0 +1,38 @@
+//Explanation:
+//1) Class Declaration: The code defines a class named Solution.
+//2) Public Method: Inside the Solution class, there is a public method min_operations.
+//3) Method Signature: The min_operations method takes a single parameter nums, which is a reference to a vector of integers (vector<int>&), and returns an integer.
+//4) Variable Declaration: Inside the min_operations method, an integer variable n is declared and assigned the size of the input vector nums.
+//5) Dynamic Programming: The method initializes a dynamic programming (DP) array dp of size n, where each element is initialized to 1. This array is used to store the length of the longest increasing subsequence (LIS) ending at each index i.
+//6) Loop through Elements: The method iterates over each element of the input vector nums using a for loop.
+//7) Nested Loop for LIS Calculation: Inside the outer loop, there is a nested loop that iterates from index 0 to i - 1.
+//8) Check Condition for Increasing Subsequence: Within the nested loop, it checks if the element at index i in nums is greater than the element at index j, and if the difference between these two elements (nums[i] - nums[j]) is greater than or equal to the distance between the indices (i - j).
+//9) Update DP Array: If the condition mentioned above is true, it means that the element at index i can be added to the LIS ending at index j. In this case, the value of dp[i] is updated to be the maximum of 1 + dp[j] (indicating that we add the element at index i to the LIS ending at index j) and the current value of dp[i].
+//10) Update Longest Increasing Subsequence Length: After updating the dp array for index i, the code updates the length of the LIS (LIS) to be the maximum of the current LIS length and the value of dp[i].
+//11) Return Result: After processing all elements in the input vector, the method returns the difference between the length of the input vector n and the length of the longest increasing subsequence LIS, which represents the minimum number of operations needed to make the array strictly increasing.
+
+
+//cpp code
+
+class Solution {
+  public:
+
+    int min_operations(vector<int>& nums) {
+        // Code here
+         int n = nums.size();
+    vector<int> dp(n,1);
+    int LIS=1;
+    for(int i=1;i<n;i++)
+    {
+        for(int j=0;j<i;j++)
+        {
+            if(nums[i]>nums[j] && (nums[i]-nums[j])>=(i-j))
+            {
+                dp[i] = max(1+dp[j],dp[i]);
+                LIS = max(LIS,dp[i]);
+            }
+        }
+    }
+    return (n-LIS);
+    }
+};
