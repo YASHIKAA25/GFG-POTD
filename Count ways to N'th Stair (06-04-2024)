@@ -1,0 +1,20 @@
+//Explanation:
+//1) Function Definition: This line defines a function countWays that takes an integer n as input and returns a long long value.
+//2) Base Case Check: If the input n is 1 or 2, the function returns n itself. This is because there are exactly n ways to form a sequence of length n when n is 1 or 2.
+//3) Calculation for Larger Values of n: For n > 2, this line calculates the number of ways to form a sequence of length n. The formula (n + 2) / 2 is used here. This formula accounts for the fact that there are n + 1 places to put the first element of the sequence, but since we cannot place it at the beginning or the end (because then the sequence will become too short), there are n - 1 valid places for it. Additionally, there's one more way to form a sequence of length n where all elements are the same, making it n ways in total.
+//4) Return Result: Finally, the calculated number of ways is returned as the result.
+
+//cpp code
+
+class Solution {
+  public:
+   
+    long long countWays(int n) {
+        // your code here
+         if(n==1 || n==2){
+            return n;
+        }
+    long long ans=(n+2)/2;
+    return ans;   
+    }
+};
