@@ -1,0 +1,26 @@
+//Explanation:
+//1) Function Definition: This line defines a function maxDotProduct that takes four arguments: n and m which represent the sizes of arrays a and b respectively, and the arrays a and b.
+//2) Dynamic Programming Matrix Initialization: This code initializes a 2D array dp of size (m+1) x (n+1) and initializes all its elements to zero using memset. This array will be used for dynamic programming to store intermediate results.
+//3) Dynamic Programming Loop:
+//> This nested loop iterates over i from 1 to m, and for each i, it iterates over j from i to n.
+//> For each i and j, it calculates the maximum dot product using dynamic programming.
+//> dp[i][j] stores the maximum dot product considering elements up to index j from array a and up to index i from array b.
+//> The maximum dot product for the current i and j is calculated by either including the current elements from both arrays a and b ((dp[i-1][j-1] + (a[j-1] * b[i-1]))), or by excluding the current element from array a (dp[i][j-1]).
+//4) Return Result: Finally, the maximum dot product calculated for the entire arrays a and b is returned as the result.
+
+//cpp code
+
+class Solution{
+	public:
+	int maxDotProduct(int n, int m, int a[], int b[]) 
+	{ 
+	    int dp[m+1][n+1]; 
+	    memset(dp, 0, sizeof(dp)); 
+	  	    for (int i=1; i<=m; i++) 
+	           for (int j=i; j<=n; j++) 
+	            dp[i][j] = max((dp[i-1][j-1] + (a[j-1]*b[i-1])) , 
+	                            dp[i][j-1]); 
+	  
+	    return dp[m][n] ; 
+	} 
+};
