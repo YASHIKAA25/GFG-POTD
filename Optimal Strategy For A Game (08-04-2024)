@@ -1,0 +1,30 @@
+//Explanation:
+//1) Define the solve Function: Function solve takes an integer array arr[], two integers left and right representing the left and right indices of the current subarray, and a 2D vector dp for memoization. It returns a long long value representing the maximum amount that can be collected from the subarray between indices left and right.
+//2) Base Cases: Handle the base cases: 
+//> If the left index exceeds the right index, it means the subarray is empty, so it returns 0. 
+//> If the left index is equal to the right index, it means there is only one element in the subarray, so it returns the value of that element. 
+//> If the value for the current subarray is already computed and stored in the dp matrix, it returns that value directly.
+//3) Recursive Calls: Perform the recursive calls to solve the problem. It calculates the maximum amount by choosing the leftmost or rightmost coin in the current subarray and recursing for the remaining subarray.
+//4) Return Maximum Amount: It returns the maximum amount by choosing the maximum between l and r, and it also memoizes this value in the dp matrix before returning.
+//5) Define the maximumAmount Function: Function maximumAmount takes an integer n representing the number of elements in the array arr[] and the array arr[] itself. It initializes the memoization matrix dp, calls the solve function to compute the maximum amount, and returns the result.
+
+//cpp code
+
+class Solution{
+    public:
+    long long solve(int arr[], int left, int right, vector<vector<long long>>&dp){
+        
+        if(left>right) return 0;
+        if(left == right) return arr[left];
+        if(dp[left][right] != -1) return dp[left][right];
+        long long l = arr[left]+min(solve(arr,left+2,right, dp), solve(arr,left+1, right-1, dp));
+        long long r = arr[right]+min(solve(arr,left,right-2, dp), solve(arr,left+1, right-1,dp));
+        return dp[left][right] = max(l,r);
+    }
+    
+    long long maximumAmount(int n, int arr[]){
+        vector<vector<long long>>dp(n+1, vector<long long>(n+1, -1));
+        long long ans = solve(arr,0,n-1,dp);
+        return ans;
+    }
+};
