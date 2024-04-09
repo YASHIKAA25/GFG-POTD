@@ -1,0 +1,38 @@
+//Explanation:
+//1) Class Definition: The code defines a class called Solution. 
+//2) The Solution class contains a public member method named minPoints. This function accepts three arguments: n, m, and points:
+//> n indicates the number of rows in the 2D points vector. 
+//> m denotes the number of columns in the 2D point vector. 
+//> points is a two-dimensional vector of integers that represents the point grid. 
+//3) Variable Initialization: Within the minPoints method, a 2D vector called dp is created with size (n+1) x (m+1), and all members are set to INT_MAX. This vector will be utilized for dynamic programming. 
+//4) Base Case Initialization: The element dp[n-1][m-1] is initialized with the maximum of 1 and 1 minus the points at the bottom-right corner of the grid. This is done to ensure that at least 1 point remains after reaching this cell.
+//5) Dynamic Programming Loop: Nested loops iterate over each cell of the dp array starting from the bottom-right corner and moving towards the top-left corner.
+//> For each cell (i, j) being processed, the code considers two possible moves: moving right (j+1) or moving down (i+1).
+//> It calculates the minimum points required to reach the current cell (i, j) by considering the maximum of points required to reach the next cell (dp[i][j+1] or dp[i+1][j]) minus the points at the current cell points[i][j].
+//> The minimum points required is then updated into dp[i][j].
+//6) Return Value: Finally, the function returns dp[0][0], which represents the minimum points required to reach the top-left corner of the grid.
+
+//cpp code
+
+class Solution{
+
+	public:
+	int minPoints(int n, int m, vector<vector<int>> points) 
+    { 
+        // Your code goes here
+        vector<vector<int>> dp(n+1,vector<int>(m+1,INT_MAX));
+        dp[n-1][m-1] = max(1-points[n-1][m-1],1);
+        
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                if(j+1<m){
+                    dp[i][j] = min(dp[i][j],max(dp[i][j+1]-points[i][j],max(1-points[i][j],1)));
+                }
+                if(i+1<n){
+                    dp[i][j] = min(dp[i][j],max(dp[i+1][j]-points[i][j],max(1-points[i][j],1)));
+                }
+            }
+        }
+        return dp[0][0];
+    } 
+};
