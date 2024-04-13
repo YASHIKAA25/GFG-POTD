@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    long long reversedBits(long long x) {
+        
+        vector<long long>bin;
+        long long base=1;
+        long long ans=0;
+        
+        while(x){
+            bin.push_back(x%2);
+            x = x/2;
+        }
+        
+        
+        while(bin.size()<32){
+            bin.push_back(0);
+            
+        }
+        
+        for(int i=bin.size()-1;i>=0;i--){
+            
+            ans+= bin[i]*base;
+            base = base*2;
+        }
+
+         return ans;
+        
+    }
+};
