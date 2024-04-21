@@ -1,0 +1,28 @@
+class Solution
+{   
+public:
+    void threeWayPartition(vector<int> &arr, int a, int b)
+    {
+        vector<int> v1, v2, v3;
+        
+        for(auto i: arr) 
+        {
+            if(i < a)
+                v1.push_back(i);
+            else if(i >= a and i <= b)
+                v2.push_back(i);
+            else
+                v3.push_back(i);
+        }
+        
+        int i = 0;
+        for(auto num: v1)
+            arr[i++] = num;
+            
+        for(auto num: v2)
+            arr[i++] = num;
+            
+        for(auto num: v3)
+            arr[i++] = num;
+    }
+};
