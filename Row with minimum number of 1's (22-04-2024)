@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    int minRow(int n, int m, vector<vector<int>> a) {
+     
+        int mini=INT_MAX;
+        int cnt=0;
+        int ans=0;
+        
+        for(int i=0;i<n;i++)
+        {
+            cnt=0;
+            for(int j=0;j<m;j++)
+            {
+                if(a[i][j]) cnt++;
+            }
+            ans=cnt<mini?i:ans;
+            mini=min(mini,cnt);
+        }
+        return ans+1;
+    }
+};
