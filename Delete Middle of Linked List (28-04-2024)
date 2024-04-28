@@ -1,0 +1,20 @@
+class Solution{
+    public:
+    Node* deleteMid(Node* head)
+    {
+        if(head == NULL || head->next == NULL){
+            return NULL;
+        }
+        Node* temp = head;
+        unordered_map<int, Node*> mp;
+        int m = 0;
+        while(temp != NULL){
+            m++;
+            mp[m] = temp;
+            temp = temp->next;
+        }
+        m = m/2;
+        mp[m]->next = mp[m+2]; 
+        return head;
+    }
+};
