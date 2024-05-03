@@ -1,0 +1,28 @@
+
+class Solution
+{
+    public:
+    // function should print the nodes at k distance from root
+    void kdis(struct Node* root,int k, int level, vector<int>& vec)
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        
+        if(level==k)
+        {
+            vec.push_back(root->data);
+        }
+        kdis(root->left,k,level+1,vec);
+        kdis(root->right,k,level+1,vec);
+    }
+    // function should print the nodes at k distance from root
+    vector<int> Kdistance(struct Node *root, int k)
+    {
+      // Your code here
+      vector<int>vec;
+      kdis(root,k,0,vec);
+      return vec;
+    }
+};
