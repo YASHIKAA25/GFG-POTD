@@ -1,0 +1,14 @@
+class Solution {
+public:
+    Node* buildTree(int in[], int post[], int n) {
+        if (n == 0) return nullptr;
+        int i = 0;
+        while(i < n && in[i] != post[n - 1]) i++;
+        Node* root = new Node(post[n - 1]);
+        Node* l = buildTree(in, post, i);
+        Node* r = buildTree(in + i + 1, post + i, n - i - 1);
+        root -> left  = l;
+        root -> right = r;
+        return root;
+    }
+};
