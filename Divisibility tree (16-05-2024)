@@ -1,0 +1,42 @@
+
+
+class Solution {
+public:
+    Solution() {
+        this->ans = 0;
+    }
+
+    int dfs(std::vector<std::vector<int>>& adj, std::vector<int>& vis, int start) {
+        vis[start] = 1;
+        int cnt = 0;
+
+        for (int it : adj[start]) {
+            if (!vis[it]) {
+                int res = dfs(adj, vis, it);
+                if (res % 2 == 0) {
+                    this->ans++;
+                } else {
+                    cnt += res;
+                }
+            }
+        }
+
+        return cnt + 1;
+    }
+
+    int minimumEdgeRemove(int n, std::vector<std::vector<int>>& edges) {
+        std::vector<std::vector<int>> adj(n);
+        for (const auto& edge : edges) {
+            adj[edge[0] - 1].push_back(edge[1] - 1);
+            adj[edge[1] - 1].push_back(edge[0] - 1);
+        }
+
+        std::vector<int> vis(n, 0);
+        dfs(adj, vis, 0);
+
+        return this->ans;
+    }
+
+private:
+    int ans;
+};
