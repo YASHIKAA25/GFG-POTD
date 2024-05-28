@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    int minimumCost(int n, int w, vector<int>& cost) {
+    // Initialize dp array
+        vector<int> dp(w + 1, INT_MAX);
+        dp[0] = 0; // Base case: no cost to buy 0 kg of oranges
+    
+        // Loop through each packet type
+        for (int i = 0; i < n; ++i) {
+            if (cost[i] == -1) continue; // Skip unavailable packets
+    
+            // Update the dp array for weights from current packet weight to w
+            for (int j = i + 1; j <= w; ++j) {
+                if (dp[j - (i + 1)] != INT_MAX) {
+                    dp[j] = min(dp[j], dp[j - (i + 1)] + cost[i]);
+                }
+            }
+        }
+    
+        return dp[w] == INT_MAX ? -1 : dp[w];
+    }
+};
