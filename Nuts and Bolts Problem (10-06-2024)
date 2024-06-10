@@ -1,0 +1,22 @@
+class Solution {
+  public:
+
+    void matchPairs(int n, char nuts[], char bolts[]) {
+        // code here
+       vector<char>nt(n,0);
+       vector<char>blt(n,0);
+       for(int i=0;i<n;i++)
+       {
+           nt[i]=nuts[i];
+           blt[i]=bolts[i];
+       }
+       sort(nt.begin(),nt.end());
+       sort(blt.begin(),blt.end());
+      
+       for(int i=0;i<n;i++)
+       {
+          nuts[i]=nt[i];
+          bolts[i]=blt[i];
+       }
+    }
+}; 
