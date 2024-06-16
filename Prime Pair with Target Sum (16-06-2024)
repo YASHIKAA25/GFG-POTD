@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    vector<int> getPrimes(int n) {
+        // code here
+          if (n < 4) return {-1, -1}; // The smallest sum of two primes is 4 (2 + 2)
+
+        // Generate prime numbers up to n using Sieve of Eratosthenes
+        vector<bool> is_prime(n + 1, true);
+        is_prime[0] = is_prime[1] = false; // 0 and 1 are not primes
+        for (int i = 2; i * i <= n; ++i) {
+            if (is_prime[i]) {
+                for (int j = i * i; j <= n; j += i) {
+                    is_prime[j] = false;
+                }
+            }
+        }
+
+        // Find two prime numbers that sum up to n
+        for (int a = 2; a <= n / 2; ++a) {
+            if (is_prime[a] && is_prime[n - a]) {
+                return {a, n - a};
+            }
+        }
+
+        return {-1, -1}; // No such pair found
+    }
+};
