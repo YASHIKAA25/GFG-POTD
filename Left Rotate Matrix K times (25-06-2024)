@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    void rotatearr(vector<int>&arr,int n, int d){
+        if(d==0||d==n)return;
+        
+        d=d%n;
+        reverse(arr.begin(),arr.begin()+d);
+        reverse(arr.begin()+d,arr.begin()+n);
+        reverse(arr.begin(),arr.begin()+n);
+    }
+    
+    vector<vector<int>> rotateMatrix(int k, vector<vector<int>> &mat) {
+        int n=mat[0].size();
+        
+        for(auto &itr:mat){
+            rotatearr(itr,n,k);
+        }
+        return mat;
+    }
+};
