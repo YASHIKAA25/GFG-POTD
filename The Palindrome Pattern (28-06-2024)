@@ -1,0 +1,45 @@
+class Solution {
+  public:
+
+    string pattern(vector<vector<int>> &arr) {
+        // Code Here
+         int n=arr.size();    //Know the size of vector
+        string s1;
+        for(int i=0;i<n;i++)
+        {
+            s1.clear();
+            for(int j=0;j<n;j++)
+            {
+                s1=s1+to_string(arr[i][j]);     //Iterate row-wise and concatenate each element in string s1
+            }
+            string s2=s1;    //Copy that string in other string
+            reverse(s1.begin(),s1.end());    //Reverse the string s1
+            if(s1==s2)     //Check for  palindrome
+            {
+                string final=to_string(i);
+                final=final+' '+'R';
+                return final;
+            }
+        }
+        s1.clear();
+
+//If we dont get palindrome in rows, move towards column
+        for(int j=0;j<n;j++)
+        {
+            s1.clear();
+            for(int i=0;i<n;i++)
+            {
+                s1=s1+to_string(arr[i][j]);
+            }
+            string s2=s1;
+            reverse(s1.begin(),s1.end());
+            if(s1==s2)
+            {
+                string final=to_string(j);
+                final=final+' '+'C';
+                return final;
+            }
+        }
+        return "-1";
+    }
+};
