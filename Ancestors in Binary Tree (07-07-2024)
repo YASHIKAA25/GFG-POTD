@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    // Function should return all the ancestor of the target node
+  bool answer(struct Node *root, int target,vector<int>&ans)
+    {
+        if(root==NULL)
+        {
+            return 0;
+        }
+        if(root->data==target)
+        {
+            return true;
+        }
+        bool left=answer(root->left,target,ans);
+        bool right=answer(root->right,target,ans);
+        if(left!=NULL)
+        {
+            ans.push_back(root->data);
+        }
+        if(right!=NULL)
+        {
+             ans.push_back(root->data);
+        }
+        
+    }
+    vector<int> Ancestors(struct Node *root, int target)
+    {
+        vector<int>ans;
+        answer(root,target,ans);
+        return ans;
+       
+    }
+};
