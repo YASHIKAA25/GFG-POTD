@@ -1,0 +1,12 @@
+class Solution {
+  public:
+    int SumofMiddleElements(vector<int> &arr1, vector<int> &arr2) {
+        // code here
+        arr1.insert(arr1.end(), arr2.begin(), arr2.end());
+        
+        int n = arr1.size();
+        sort(arr1.begin(), arr1.end());
+        int sum = arr1[n/2] + arr1[(n/2) -1];
+        return sum;
+    }
+};
