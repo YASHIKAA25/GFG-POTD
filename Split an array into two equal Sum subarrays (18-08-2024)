@@ -1,0 +1,18 @@
+class Solution {
+  public:
+   bool canSplit(vector<int>& arr) {
+        int i=0,j=arr.size()-1;
+        int sum1=0,sum2=0;
+        while(i<=j){
+            if(sum1<sum2){
+                sum1+=arr[i];
+                i++;
+            }
+            else{
+                sum2+=arr[j];
+                j--;
+            }
+        }
+        return sum1==sum2 ? true : false;
+    }
+};
