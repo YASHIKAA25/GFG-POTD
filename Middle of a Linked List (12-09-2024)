@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int getMiddle(Node* head) {
+        Node* slow = head;
+        Node* fast = head;
+
+        // Check for null head
+        if (head == nullptr || head->next == nullptr) {
+            return head->data;
+        }
+
+        // Traverse the list
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow->data;
+    }
+};
