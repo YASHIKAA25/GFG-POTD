@@ -1,0 +1,12 @@
+int countBuildings(vector<int> &height) {
+        int h=height[0],count=1;
+        for(int i=1;i<height.size();i++)
+        {
+            if(height[i]>h)
+            {
+                count++;
+                h=height[i];
+            }
+        }
+        return count;
+        }
