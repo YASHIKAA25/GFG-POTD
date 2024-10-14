@@ -1,0 +1,12 @@
+int getCount(struct Node* head) {
+        // Code here
+        int ans = 0;
+        Node *curr = head;
+        while(curr)
+        {
+            ans++;
+            curr = curr->next;
+        }
+        return ans;
+
+}
