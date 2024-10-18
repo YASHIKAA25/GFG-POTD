@@ -1,0 +1,9 @@
+ int getSingle(vector<int>& arr) {
+        // code here
+        int XORsum = 0;
+        for(auto it : arr)
+        {
+            XORsum ^= it;
+        }
+        return XORsum;
+    }
